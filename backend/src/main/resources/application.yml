@@ -5,7 +5,7 @@ spring:
   application:
     name: ofd-backend
   datasource:
-    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/ofd}
+    url: ${JDBC_DATABASE_URL:${DATABASE_URL:jdbc:postgresql://localhost:5432/ofd}}
     username: ${DB_USER:ofd}
     password: ${DB_PASSWORD:ofd}
   jpa:

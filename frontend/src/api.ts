@@ -3,7 +3,9 @@ import type { Cart, DeliveryStatus, MenuItem, OrderSummary, Restaurant, User, Ap
 
 export const TOKEN_KEY = 'ofd_token'
 
-const api = axios.create({ baseURL: '/api' })
+const rawApiBase = import.meta.env.VITE_API_URL || '/api'
+const apiBase = rawApiBase.endsWith('/api') ? rawApiBase : `${rawApiBase}/api`
+const api = axios.create({ baseURL: apiBase })
 
 api.interceptors.request.use((cfg) => {
   const t = localStorage.getItem(TOKEN_KEY)
