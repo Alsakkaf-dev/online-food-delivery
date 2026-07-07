@@ -4,13 +4,16 @@ FROM maven:3.9.8-eclipse-temurin-21 AS build
 WORKDIR /workspace
 
 # Copy only the files needed for dependency resolution + source
-COPY backend/pom.xml backend/mvnw backend/mvnw.cmd backend/.mvn ./backend/
+COPY backend/pom.xml ./backend/pom.xml
+COPY backend/mvnw ./backend/mvnw
+COPY backend/mvnw.cmd ./backend/mvnw.cmd
+COPY backend/.mvn ./backend/.mvn
 COPY backend/src ./backend/src
 
 # Ensure the Maven wrapper is executable and build the production jar
 RUN chmod +x backend/mvnw \
     && cd backend \
-    && ./mvnw -B package -DskipTests
+    && ./mvnw -B -q package -DskipTests
 
 # Stage 2: runtime image
 FROM eclipse-temurin:21-jre-jammy
